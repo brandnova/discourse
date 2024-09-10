@@ -3,21 +3,26 @@
     <!-- Sidebar -->
     <div
       :class="[
-        sidebarOpen ? 'w-80 absolute md:relative h-full' : 'w-0', 
+        sidebarOpen ? 'w-80 absolute md:relative h-full' : 'w-0 absolute', 
         isDarkMode ? 'bg-gray-800 border-gray-700 ' : 'bg-white border-gray-200',
         'border-r overflow-y-auto hide-scrollbar transition-all duration-300'
       ]"
     >
-      <div class="p-4">
+      <div class="p-4 ps-8 flex justify-between space-x-2">
+        <button @click="toggleSidebar">
+          <i :class="[sidebarOpen ? 'fas fa-times' : 'fas fa-bars', isDarkMode ? 'text-white' : 'text-black', 'transition-all duration-300']"></i>
+        </button>
         <div class="relative">
           <input
             type="text"
             placeholder="Search discussions"
-            class="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+            class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+            :class="[isDarkMode ? 'text-gray-500 bg-gray-800 border-gray-500 focus:bg-gray-900' : 'text-black focus:bg-gray-50']"
             v-model="searchTerm"
           />
           <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
         </div>
+        
       </div>
       <div class="overflow-y-auto h-[calc(100vh-80px)]">
         <div 
@@ -30,11 +35,11 @@
           ]" 
           @click="setCurrentDiscussion(discussion)"
         >
-          <h3 class="font-semibold dark:text-white">{{ discussion.title }}</h3>
-          <p class="text-sm text-gray-500 dark:text-gray-400 truncate">
+          <h3 class="font-semibold">{{ discussion.title }}</h3>
+          <p class="text-sm text-gray-500 truncate">
             {{ discussion.startDate }} - {{ discussion.active ? 'Ongoing' : discussion.endDate }}
           </p>
-          <p class="text-sm text-gray-500 dark:text-gray-400 truncate">
+          <p class="text-sm text-gray-500 truncate">
             {{ discussion.lastMessage }}
           </p>
         </div>
@@ -56,20 +61,18 @@
           // currentDiscussion.id === discussion.id ? 'text-base' : '',
         ]" 
       >
-        <div class="flex items-center">
-          
+        <div class="flex items-center space-x-5">
+          <button @click="toggleSidebar" class="mr-4 focus:outline-none">
+            <i :class="[sidebarOpen ? 'fas fa-times md:hidden' : 'fas fa-bars']"></i>
+          </button>
           <div>
-            <h2 class="font-semibold dark:text-white">{{ currentDiscussion.title }}</h2>
-            <p class="text-sm text-gray-500 dark:text-gray-400">
+            <h2 class="font-semibold">{{ currentDiscussion.title }}</h2>
+            <p class="text-sm text-gray-500">
               {{ currentDiscussion.active ? 'Active' : 'Inactive' }}
             </p>
           </div>
         </div>
         <div class="flex items-center">
-          <button @click="toggleSidebar" class="mr-4 focus:outline-none dark:text-white">
-            <i :class="[sidebarOpen ? 'fas fa-times' : 'fas fa-bars']"></i>
-          </button>
-          
           <button @click="toggleDarkMode" class="p-2 rounded-full transition-all duration-300" 
             :class="[isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-300']"
           >
@@ -143,13 +146,13 @@
                 v-for="(tool, index) in editingTools"
                 :key="index"
                 @click="applyFormatting(tool.tag)"
-                class="mr-2 p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none"
+                class="mr-2 p-1 rounded hover:bg-gray-200 focus:outline-none"
                 :title="tool.name"
               >
-                <i :class="['fas', tool.icon, 'text-gray-600 dark:text-gray-400']"></i>
+                <i :class="['fas', tool.icon, 'text-gray-600']"></i>
               </button>
             </span>
-            <p v-if="typingUser" class="mr-4 text-sm text-gray-500 dark:text-gray-400">
+            <p v-if="typingUser" class="mr-4 text-sm text-gray-500">
               {{ typingUser }} is typing...
             </p>
             
@@ -166,7 +169,7 @@
               rows="2"
             ></textarea>
             <button
-              class="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none"
+              class="p-2 w-10 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none"
               @click="sendMessage"
             >
               <i class="fas fa-paper-plane"></i>
