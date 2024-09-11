@@ -74,9 +74,8 @@
         </div>
         <div class="flex items-center">
           <button @click="toggleDarkMode" class="p-2 rounded-full transition-all duration-300" 
-            :class="[isDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-300']"
           >
-            <i class="transition-all duration-300" :class="[isDarkMode ? 'fas fa-sun text-yellow-400' : 'fas fa-moon text-gray-600']"></i>
+            <i class="transition-all duration-300" :class="[isDarkMode ? 'fas fa-sun text-yellow-400 text-xl' : 'fas fa-moon text-gray-600 text-xl']"></i>
           </button>
         </div>
       </div>
