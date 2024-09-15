@@ -227,7 +227,7 @@ export default {
 
     const currentDiscussion = ref(discussions.value[0]);
     const searchTerm = ref('');
-    const sidebarOpen = ref(true);
+    const sidebarOpen = ref(false);
     const newMessage = ref('');
     const isDarkMode = ref(false);
     const showScrollToBottom = ref(false);
